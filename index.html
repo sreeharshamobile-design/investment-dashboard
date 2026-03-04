@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#005f73" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="InvestDash" />
+    <title>Investment Dashboard</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Overview</p>
+          <h1>Investment Dashboard</h1>
+        </div>
+        <div class="actions">
+          <a class="btn" href="entry.html">Data Entry</a>
+          <a class="btn btn-ghost" href="reset.html">Data & Restore</a>
+        </div>
+      </header>
+
+      <section class="summary-grid" id="summaryCards"></section>
+
+      <section class="panel">
+        <h2>Category View</h2>
+        <div id="categoryDashboard" class="category-dash"></div>
+      </section>
+
+      <section class="panel">
+        <div class="history-header">
+          <h2>History (Read Only)</h2>
+          <label>
+            Filter by date
+            <input id="historyDateFilter" type="date" />
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Market</th>
+                <th>Currency</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Qty</th>
+                <th>Txn Price</th>
+                <th>Market Unit</th>
+                <th>Net Invested</th>
+                <th>Current Value</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+    <script src="pwa.js"></script>
+  </body>
+</html>

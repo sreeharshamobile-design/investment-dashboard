@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#005f73" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="InvestDash" />
+    <title>Data & Restore</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Safety Controls</p>
+          <h1>Data & Restore</h1>
+        </div>
+        <a class="btn btn-ghost" href="index.html">Back To Dashboard</a>
+      </header>
+
+      <section class="summary-grid" id="dataSummary"></section>
+
+      <section class="panel-grid">
+        <article class="panel">
+          <h2>Backup Options</h2>
+          <div class="stack-form" style="margin-top: 0.8rem">
+            <button id="createSnapshot" class="btn" type="button">Create Snapshot</button>
+            <button id="exportData" class="btn btn-ghost" type="button">Export Current Data (JSON)</button>
+            <label>
+              Import backup JSON
+              <input id="importFile" type="file" accept="application/json" />
+            </label>
+            <button id="importData" class="btn" type="button">Import And Replace Current Data</button>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h2>Reset Options</h2>
+          <div class="stack-form" style="margin-top: 0.8rem">
+            <button id="resetEntries" class="btn" type="button">Reset Entries Only</button>
+            <button id="resetCategories" class="btn" type="button">Reset Categories (Keep Entries Empty)</button>
+            <button id="fullReset" class="btn btn-ghost" type="button">Full Reset (Data + Snapshots)</button>
+            <p class="note-text">A snapshot is created automatically before each reset.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="history-header">
+          <h2>Saved Snapshots</h2>
+          <button id="clearSnapshots" class="btn btn-ghost" type="button">Delete All Snapshots</button>
+        </div>
+        <div id="snapshotList" class="snapshot-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Status</h2>
+        <p id="statusText" class="note-text">Ready.</p>
+      </section>
+    </main>
+
+    <script src="reset.js"></script>
+    <script src="pwa.js"></script>
+  </body>
+</html>

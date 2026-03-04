@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#005f73" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="InvestDash" />
+    <title>Investment Data Entry</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Daily Tracker</p>
+          <h1>Investment Data Entry</h1>
+        </div>
+        <div class="actions">
+          <a class="btn btn-ghost" href="index.html">Dashboard</a>
+          <a class="btn btn-ghost" href="reset.html">Data & Restore</a>
+        </div>
+      </header>
+
+      <section class="summary-grid" id="summaryCards"></section>
+
+      <section class="panel-grid">
+        <article class="panel">
+          <h2>Add Entity (Category)</h2>
+          <form id="categoryForm" class="stack-form">
+            <label>
+              Category name
+              <input id="categoryName" type="text" placeholder="Bullion" required />
+            </label>
+            <button class="btn" type="submit">Add Category</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <h2>Add Subcategory</h2>
+          <form id="subCategoryForm" class="stack-form">
+            <label>
+              Category
+              <select id="subCategoryParent" required></select>
+            </label>
+            <label>
+              Subcategory name
+              <input id="subCategoryName" type="text" placeholder="Gold" required />
+            </label>
+            <label>
+              Unit label
+              <input id="subCategoryUnit" type="text" placeholder="grams, units, shares" required />
+            </label>
+            <label>
+              Valuation model
+              <select id="subCategoryPricingModel" required>
+                <option value="BULLION">Bullion (Market Buy/Sell)</option>
+                <option value="NAV">NAV</option>
+                <option value="PRICE">Market Price</option>
+              </select>
+            </label>
+            <button class="btn" type="submit">Add Subcategory</button>
+          </form>
+        </article>
+
+        <article class="panel panel-wide">
+          <h2>Update Current Market Data</h2>
+          <form id="marketDataForm" class="entry-grid">
+            <label>
+              Category
+              <select id="marketDataCategory" required></select>
+            </label>
+            <label>
+              Market
+              <select id="marketDataMarket" required>
+                <option value="India">India</option>
+                <option value="Japan">Japan</option>
+              </select>
+            </label>
+            <label>
+              Subcategory
+              <select id="marketDataSubcategory" required></select>
+            </label>
+            <label>
+              Market buy price
+              <input id="marketBuyPrice" type="number" min="0" step="0.01" placeholder="Only for bullion" />
+            </label>
+            <label>
+              Market sell price
+              <input id="marketSellPrice" type="number" min="0" step="0.01" placeholder="Used for current value" />
+            </label>
+            <label>
+              NAV
+              <input id="marketNav" type="number" min="0" step="0.0001" placeholder="For ETF / Mutual Fund" />
+            </label>
+            <button id="fetchJapanGoldPrice" class="btn btn-ghost" type="button">Fetch Japan Gold (Ishifuku)</button>
+            <button class="btn" type="submit">Save Market Data</button>
+          </form>
+        </article>
+
+        <article class="panel panel-wide">
+          <h2>Available Market Data</h2>
+          <div class="table-wrap" style="margin-top: 0.8rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Subcategory</th>
+                  <th>Model</th>
+                  <th>India Buy</th>
+                  <th>India Sell</th>
+                  <th>India NAV</th>
+                  <th>Japan Buy</th>
+                  <th>Japan Sell</th>
+                  <th>Japan NAV</th>
+                  <th>Modify</th>
+                </tr>
+              </thead>
+              <tbody id="marketDataTableBody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel panel-wide">
+          <h2>Add Daily Investment Entry</h2>
+          <form id="entryForm" class="entry-grid">
+            <label>
+              Date
+              <input id="entryDate" type="date" required />
+            </label>
+            <label>
+              Category
+              <select id="entryCategory" required></select>
+            </label>
+            <label>
+              Subcategory
+              <select id="entrySubcategory" required></select>
+            </label>
+            <label>
+              Transaction type
+              <select id="entryType" required>
+                <option value="BUY">Buy</option>
+                <option value="SELL">Sell</option>
+                <option value="CORRECTION">Correction</option>
+              </select>
+            </label>
+            <label>
+              Market
+              <select id="entryMarket" required>
+                <option value="India">India</option>
+                <option value="Japan">Japan</option>
+              </select>
+            </label>
+            <label>
+              Currency
+              <select id="entryCurrency" required disabled>
+                <option value="INR">INR (Rupee)</option>
+                <option value="JPY">JPY (Yen)</option>
+              </select>
+            </label>
+            <label>
+              Quantity
+              <input id="entryQuantity" type="number" min="0" step="0.0001" placeholder="10" required />
+            </label>
+            <label>
+              Transaction total amount
+              <input id="entryTotalAmount" type="number" min="0" step="0.01" placeholder="Auto if price exists" />
+            </label>
+            <label>
+              Transaction price per unit
+              <input id="entryBuyPrice" type="number" min="0" step="0.01" placeholder="7150" required />
+            </label>
+            <label class="entry-notes">
+              Notes
+              <input id="entryNotes" type="text" placeholder="Optional" />
+            </label>
+            <button class="btn" type="submit">Save Entry</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>Category View</h2>
+        <div id="categoryDashboard" class="category-dash"></div>
+      </section>
+
+      <section class="panel">
+        <div class="history-header">
+          <h2>Investment History</h2>
+          <label>
+            Filter by date
+            <input id="historyDateFilter" type="date" />
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Market</th>
+                <th>Currency</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Qty</th>
+                <th>Txn Price</th>
+                <th>Market Unit</th>
+                <th>Net Invested</th>
+                <th>Current Value</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="editDialog">
+      <form id="editForm" class="stack-form">
+        <h3>Edit Entry</h3>
+        <input id="editId" type="hidden" />
+        <label>
+          Date
+          <input id="editDate" type="date" required />
+        </label>
+        <label>
+          Transaction type
+          <select id="editType" required>
+            <option value="BUY">Buy</option>
+            <option value="SELL">Sell</option>
+            <option value="CORRECTION">Correction</option>
+          </select>
+        </label>
+        <label>
+          Market
+          <select id="editMarket" required>
+            <option value="India">India</option>
+            <option value="Japan">Japan</option>
+          </select>
+        </label>
+        <label>
+          Currency
+          <select id="editCurrency" required disabled>
+            <option value="INR">INR (Rupee)</option>
+            <option value="JPY">JPY (Yen)</option>
+          </select>
+        </label>
+        <label>
+          Quantity
+          <input id="editQuantity" type="number" min="0" step="0.0001" required />
+        </label>
+        <label>
+          Transaction total amount
+          <input id="editTotalAmount" type="number" min="0" step="0.01" />
+        </label>
+        <label>
+          Transaction price per unit
+          <input id="editBuyPrice" type="number" min="0" step="0.01" required />
+        </label>
+        <label>
+          Notes
+          <input id="editNotes" type="text" />
+        </label>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-ghost" id="cancelEdit">Cancel</button>
+          <button class="btn" type="submit">Update</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+    <script src="pwa.js"></script>
+  </body>
+</html>
